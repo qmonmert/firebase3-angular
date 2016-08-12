@@ -11,11 +11,29 @@
 
     angular
         .module('app', ['firebase'])
-        .controller('MyCtrl', function($firebaseObject) {
-            const rootRef = firebase.database().ref().child('angular');
-            const ref = rootRef.child('object');
-            this.object = $firebaseObject(ref);
-        });
+        .config(function($firebaseRefProvider) {
+            $firebaseRefProvider.registerUrl({
+                default: config.databaseURL,
+                object: `${config.databaseURL}/angular/object`
+            });
+        })
+        .factory('ObjectFactory', ObjectFactory)
+        .controller('MyCtrl', MyCtrl);
 
+    function ObjectFactory($firebaseObject, $firebaseRef) {
+        return $firebaseObject($firebaseRef.object);
+    }
+
+    function MyCtrl(ObjectFactory) {
+        this.object = ObjectFactory;
+        this.sayHello = () => {
+            return `Hello, ${this.object.name}`;
+        }
+    }    
+
+    // Unit test
+    const ctrl = new MyCtrl({ name: 'Quentin' });
+    const message = ctrl.sayHello();
+    console.assert(message === 'Hello, Quentin', `Expected: Hello, Quentin - Actual: ${message}`);    
 
 }());
