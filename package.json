@@ -1,0 +1,20 @@
+{
+  "name": "firebase3-angular",
+  "version": "1.0.0",
+  "description": "Firebase and Angular",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "firebase",
+    "angular"
+  ],
+  "author": "Quentin Monmert",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.5.8",
+    "angularfire": "^2.0.1",
+    "firebase": "^3.2.1"
+  }
+}
